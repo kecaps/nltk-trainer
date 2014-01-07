@@ -78,7 +78,7 @@ sklearn_kwargs = {
 	# svm
 	'LinearSVC': ['C', 'loss', 'penalty'],
 	'NuSVC': ['nu', 'kernel'],
-	'SVC': ['C', 'kernel'],
+	'SVC': ['C', 'kernel', 'gamma', 'tol','shrinking'],
 	# tree
 	'DecisionTreeClassifier': ['criterion', 'max_feats', 'depth_cutoff'],
 }
@@ -97,6 +97,12 @@ def add_sklearn_args(parser):
 	sklearn_group.add_argument('--kernel', default='rbf',
 		choices=['linear', 'poly', 'rbf', 'sigmoid', 'precomputed'],
 		help='kernel type for support vector machine classifiers, default is %(default)s')
+	sklearn_group.add_argument('--gamma', type=float, default=0.0,
+		help='kernel coefficient for SVC')
+	sklearn_group.add_argument('--no-shrinking', action='store_false', default=True, dest='shrinking',
+		help='disable shrinking heuristic for libSVM')
+	sklearn_group.add_argument('--tol', type=float, default=0.001,
+		help='tolerance for stopping SVC training, default is %(default)s')
 	sklearn_group.add_argument('--learning_rate', type=float, default=0.1,
 		help='learning rate, default is %(default)s')
 	sklearn_group.add_argument('--loss', choices=['l1', 'l2'],
